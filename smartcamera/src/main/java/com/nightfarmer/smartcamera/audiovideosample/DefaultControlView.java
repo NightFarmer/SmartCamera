@@ -177,6 +177,7 @@ public class DefaultControlView extends RelativeLayout {
         btn_cancel.setClickable(false);
         btn_ok.setClickable(false);
         operator.reset();
+        operator.onCancel();
 //                operator.setReadyCallback(new SmartCameraView.ReadyCallback() {
 //                    @Override
 //                    public void onReady() {

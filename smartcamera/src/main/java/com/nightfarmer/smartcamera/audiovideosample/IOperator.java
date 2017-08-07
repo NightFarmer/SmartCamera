@@ -14,4 +14,6 @@ public interface IOperator {
     void switchCamera();
 
     void reset();
+
+    void onCancel();
 }

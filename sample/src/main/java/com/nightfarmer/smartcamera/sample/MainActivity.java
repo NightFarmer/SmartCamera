@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void open(View view) {
         CameraInfo cameraInfo = new CameraInfo();
-        cameraInfo.type = CameraInfo.CameraType.Video;
+//        cameraInfo.type = CameraInfo.CameraType.Video;
         SmartCamera.startCamera(this, 1, cameraInfo);
     }
 

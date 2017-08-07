@@ -24,6 +24,7 @@ import com.nightfarmer.smartcamera.encoder.MediaEncoder;
 import com.nightfarmer.smartcamera.encoder.MediaMuxerWrapper;
 import com.nightfarmer.smartcamera.encoder.MediaVideoEncoder;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CameraActivity extends AppCompatActivity {
@@ -82,9 +83,17 @@ public class CameraActivity extends AppCompatActivity {
         RelativeLayout root_view = (RelativeLayout) findViewById(R.id.root_view);
         root_view.addView(defaultControlView);
         defaultControlView.attachToSmartCameraView(new IOperator() {
+            File latestFile;
+
             @Override
-            public void takePicture(CameraGLView.cameraFinishCallback callback) {
-                mCameraView.takePicture(callback);
+            public void takePicture(final CameraGLView.cameraFinishCallback callback) {
+                mCameraView.takePicture(new CameraGLView.cameraFinishCallback() {
+                    @Override
+                    public void onFinish(String path) {
+                        latestFile = new File(path);
+                        callback.onFinish(path);
+                    }
+                });
             }
 
             @Override
@@ -105,6 +114,7 @@ public class CameraActivity extends AppCompatActivity {
                             public void run() {
                                 play(outputPath);
                                 callback.onFinish(outputPath);
+                                latestFile = new File(outputPath);
                             }
                         });
                     }
@@ -127,6 +137,13 @@ public class CameraActivity extends AppCompatActivity {
                     mMediaPlayer.release();
                     mMediaPlayer = null;
 //                    tv_preview
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                if (latestFile != null && latestFile.exists()) {
+                    latestFile.delete();
                 }
             }
         });
@@ -156,7 +173,7 @@ public class CameraActivity extends AppCompatActivity {
     private void startRecording() {
         if (DEBUG) Log.v(TAG, "startRecording:");
         try {
-            mMuxer = new MediaMuxerWrapper(".mp4",cameraInfo);    // if you record audio only, ".m4a" is also OK.
+            mMuxer = new MediaMuxerWrapper(".mp4", cameraInfo);    // if you record audio only, ".m4a" is also OK.
             if (true) {
                 // for video capturing
                 new MediaVideoEncoder(mMuxer, mMediaEncoderListener, mCameraView.getVideoWidth(), mCameraView.getVideoHeight());
