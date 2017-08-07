@@ -156,6 +156,7 @@ public class DefaultControlView extends RelativeLayout {
         intent.putExtra("path", filePath);
         activity.setResult(Activity.RESULT_OK, intent);
         activity.finish();
+        activity.overridePendingTransition(R.anim.stay, R.anim.bottom_out);
     }
 
     private void onCancel() {

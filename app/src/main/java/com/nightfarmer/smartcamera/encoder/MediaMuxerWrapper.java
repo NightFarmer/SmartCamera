@@ -215,8 +215,8 @@ public class MediaMuxerWrapper {
      * @return return null when this app has no writing permission to external storage.
      */
     public static final File getCaptureFile(final String type, final String ext) {
-        final File dir = new File(Environment.getExternalStoragePublicDirectory(type), DIR_NAME);
-//        final File dir = Environment.getExternalStoragePublicDirectory(type);
+//        final File dir = new File(Environment.getExternalStoragePublicDirectory(type), DIR_NAME);
+        final File dir = Environment.getExternalStoragePublicDirectory(type);
         Log.d(TAG, "path=" + dir.toString());
         dir.mkdirs();
         if (dir.canWrite()) {

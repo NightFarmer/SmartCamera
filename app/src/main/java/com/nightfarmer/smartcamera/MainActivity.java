@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jump(View view) {
-        startActivityForResult(new Intent(this, CameraActivity.class), 1);
+        SmartCamera.startCameraActivity(this, 1);
     }
 
     private static final String DIR_NAME = "AVRecSample";
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             intent.setDataAndType(Uri.fromFile(file), type);
         }
 
-//跳转
         startActivity(intent);
     }
 
@@ -89,28 +88,4 @@ public class MainActivity extends AppCompatActivity {
         result_label.setText("" + resultFilePath);
     }
 
-    public void check(View view) {
-        ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 1);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        boolean permission;
-        permission = ActivityCompat.checkSelfPermission(this, PERMISSIONS_STORAGE[0]) == PackageManager.PERMISSION_GRANTED;
-        permission = permission && (ActivityCompat.checkSelfPermission(this, PERMISSIONS_STORAGE[1]) == PackageManager.PERMISSION_GRANTED);
-        permission = permission && (ActivityCompat.checkSelfPermission(this, PERMISSIONS_STORAGE[2]) == PackageManager.PERMISSION_GRANTED);
-        permission = permission && (ActivityCompat.checkSelfPermission(this, PERMISSIONS_STORAGE[3]) == PackageManager.PERMISSION_GRANTED);
-        if (!permission) {
-            check(null);
-        }
-    }
-
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO
-    };
 }
