@@ -1,5 +1,7 @@
 package com.nightfarmer.smartcamera;
 
+import android.os.Environment;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +12,8 @@ public class CameraInfo implements Serializable {
 
     public CameraType type = CameraType.Picture;
     public int pictureQuality = 50;
+    public String pictureOutputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
+    public String VideoOutputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath();
 
     public static enum CameraType {
         Picture,

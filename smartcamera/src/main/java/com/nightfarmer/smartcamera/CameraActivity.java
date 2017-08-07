@@ -156,7 +156,7 @@ public class CameraActivity extends AppCompatActivity {
     private void startRecording() {
         if (DEBUG) Log.v(TAG, "startRecording:");
         try {
-            mMuxer = new MediaMuxerWrapper(".mp4");    // if you record audio only, ".m4a" is also OK.
+            mMuxer = new MediaMuxerWrapper(".mp4",cameraInfo);    // if you record audio only, ".m4a" is also OK.
             if (true) {
                 // for video capturing
                 new MediaVideoEncoder(mMuxer, mMediaEncoderListener, mCameraView.getVideoWidth(), mCameraView.getVideoHeight());

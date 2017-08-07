@@ -33,6 +33,7 @@ import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.OrientationEventListener;
@@ -466,9 +467,14 @@ public final class CameraGLView extends GLSurfaceView {
         }
 
         private String saveBitmap(Bitmap resultBitmap) {
-            File externalStorageDirectory = Environment.getExternalStorageDirectory();
+            String pictureOutputDir = cameraInfo.pictureOutputDir;
+            File path = new File(pictureOutputDir);
+            if (!path.exists()) {
+                path.mkdirs();
+            }
+//            File externalStorageDirectory = Environment.getExternalStorageDirectory();
             String fileName = System.currentTimeMillis() + ".jpg";
-            File file = new File(externalStorageDirectory, fileName);
+            File file = new File(pictureOutputDir, fileName);
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(file);
