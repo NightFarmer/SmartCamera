@@ -9,9 +9,14 @@ import android.content.Intent;
 
 public class SmartCamera {
 
-    public static void startCameraActivity(Activity activity, int requestCode) {
+    public static void startCamera(Activity activity, int requestCode) {
+        startCamera(activity, requestCode, new CameraInfo());
+    }
+
+    public static void startCamera(Activity activity, int requestCode, CameraInfo cameraInfo) {
         Intent intent = new Intent(activity, PermissionCheckActivity.class);
         intent.putExtra("requestCode", requestCode);
+        intent.putExtra("cameraInfo", cameraInfo);
         activity.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(R.anim.bottom_in, R.anim.stay);
     }

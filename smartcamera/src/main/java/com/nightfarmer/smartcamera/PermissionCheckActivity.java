@@ -108,6 +108,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
 
     private void startCameraActivity() {
         Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra("cameraInfo", getIntent().getSerializableExtra("cameraInfo"));
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.bottom_in, R.anim.stay);
     }

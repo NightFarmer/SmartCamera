@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nightfarmer.smartcamera.CameraInfo;
 import com.nightfarmer.smartcamera.R;
 
 /**
@@ -33,6 +34,7 @@ public class DefaultControlView extends RelativeLayout {
     boolean canceled = false;
     boolean ok = false;
     String filePath = null;
+    private CameraInfo cameraInfo;
 
     public void attachToSmartCameraView(IOperator operator) {
         this.operator = operator;
@@ -49,6 +51,18 @@ public class DefaultControlView extends RelativeLayout {
     public DefaultControlView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+    }
+
+    public void setCameraInfo(CameraInfo cameraInfo) {
+        this.cameraInfo = cameraInfo;
+        btn_snap.cameraInfo = cameraInfo;
+        if (cameraInfo.type == CameraInfo.CameraType.All) {
+            tv_label.setText("轻触拍照，长摁录像");
+        } else if (cameraInfo.type == CameraInfo.CameraType.Picture) {
+            tv_label.setText("轻触拍照");
+        } else if (cameraInfo.type == CameraInfo.CameraType.Video) {
+            tv_label.setText("长摁录像");
+        }
     }
 
     private void init(Context context) {

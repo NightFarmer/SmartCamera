@@ -45,6 +45,7 @@ public class CameraActivity extends AppCompatActivity {
     private RelativeLayout container_preview;
     private ImageView iv_preview;
 
+    private CameraInfo cameraInfo;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -65,7 +66,10 @@ public class CameraActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_camera);
 
+        cameraInfo = (CameraInfo) getIntent().getSerializableExtra("cameraInfo");
+
         mCameraView = (CameraGLView) findViewById(R.id.cameraView);
+        mCameraView.cameraInfo = cameraInfo;
 //        mCameraView.setVideoSize(1280, 720);
 
         iv_preview = (ImageView) findViewById(R.id.iv_preview);
@@ -73,6 +77,7 @@ public class CameraActivity extends AppCompatActivity {
 
         container_preview = (RelativeLayout) findViewById(R.id.container_preview);
         DefaultControlView defaultControlView = new DefaultControlView(this);
+        defaultControlView.setCameraInfo(cameraInfo);
         defaultControlView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         RelativeLayout root_view = (RelativeLayout) findViewById(R.id.root_view);
         root_view.addView(defaultControlView);

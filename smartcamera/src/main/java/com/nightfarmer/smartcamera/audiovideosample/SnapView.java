@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.nightfarmer.smartcamera.CameraInfo;
+
 /**
  * Created by zhangfan on 17-7-18.
  */
@@ -26,6 +28,7 @@ public class SnapView extends View {
     private int measuredWidth;
     private int measuredHeight;
     RectF rectF = new RectF();
+    public CameraInfo cameraInfo;
 
     public SnapView(Context context) {
         this(context, null);
@@ -139,10 +142,10 @@ public class SnapView extends View {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
                         Float newPressContinued = (float) animation.getAnimatedValue();
-                        if (newPressContinued > 300 && null == expandAnim) {
+                        if (newPressContinued > 300 && null == expandAnim && cameraInfo.type.couldLongPress()) {
                             createExpandAnim();
                         }
-                        if (pressContinued <= 500 && newPressContinued > 500 && pressListener != null) {
+                        if (pressContinued <= 500 && newPressContinued > 500 && pressListener != null && cameraInfo.type.couldLongPress()) {
                             pressListener.onLongPressDown();
                         }
                         updateProgress(newPressContinued);
@@ -166,18 +169,20 @@ public class SnapView extends View {
 
     private void updateProgress(float newPressContinued) {
         pressContinued = newPressContinued;
-        progress = Math.max(0, (pressContinued - 500) / (maxDelay - 500));
+        if (cameraInfo.type.couldLongPress()) {
+            progress = Math.max(0, (pressContinued - 500) / (maxDelay - 500));
+        }
     }
 
     private void timerEnd() {
         createCollapseAnim();
-        if (pressContinued > 500) {
+        if (pressContinued > 500 && cameraInfo.type.couldLongPress()) {
 //            Toast.makeText(getContext(), "长摁结束", Toast.LENGTH_SHORT).show();
             Log.i("pressContinued", "长摁结束" + pressContinued);
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (pressListener != null) {
+                    if (pressListener != null && cameraInfo.type.couldLongPress()) {
                         pressListener.onLongPressUp();
                     }
                 }
@@ -188,7 +193,7 @@ public class SnapView extends View {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (pressListener != null) {
+                    if (pressListener != null && cameraInfo.type.couldClick()) {
                         pressListener.onClick();
                     }
                 }

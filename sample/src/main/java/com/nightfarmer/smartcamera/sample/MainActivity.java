@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nightfarmer.smartcamera.CameraInfo;
 import com.nightfarmer.smartcamera.SmartCamera;
 
 import java.io.File;
@@ -28,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open(View view) {
-        SmartCamera.startCameraActivity(this, 1);
+        CameraInfo cameraInfo = new CameraInfo();
+        cameraInfo.type = CameraInfo.CameraType.Video;
+        SmartCamera.startCamera(this, 1, cameraInfo);
     }
 
     private static final String DIR_NAME = "AVRecSample";

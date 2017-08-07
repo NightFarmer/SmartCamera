@@ -39,6 +39,7 @@ import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
 import android.widget.ImageView;
 
+import com.nightfarmer.smartcamera.CameraInfo;
 import com.nightfarmer.smartcamera.encoder.MediaVideoEncoder;
 import com.nightfarmer.smartcamera.glutils.GLDrawer2D;
 
@@ -80,6 +81,7 @@ public final class CameraGLView extends GLSurfaceView {
     private boolean showPicture;
 
     int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    public CameraInfo cameraInfo;
 
     public void switchCamera() {
         if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
@@ -470,7 +472,7 @@ public final class CameraGLView extends GLSurfaceView {
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(file);
-                resultBitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
+                resultBitmap.compress(Bitmap.CompressFormat.JPEG, cameraInfo.pictureQuality, fileOutputStream);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
