@@ -82,10 +82,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             resultFilePath = data.getStringExtra("path");
+            File file = new File(resultFilePath);
+            String info = "文件不存在";
+            if (file.exists()) {
+                long length = file.length();
+                info = resultFilePath + "\n";
+                double size = length / (1024.0 * 1024);
+                info += size + "\n";
+//                resultFilePath = info;
+                result_label.setText(info);
+            }
         } else {
             resultFilePath = "";
+            result_label.setText("");
         }
-        result_label.setText("" + resultFilePath);
     }
 
 }

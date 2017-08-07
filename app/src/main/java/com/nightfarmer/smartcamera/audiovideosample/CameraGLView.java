@@ -24,6 +24,7 @@ package com.nightfarmer.smartcamera.audiovideosample;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.SensorManager;
@@ -470,7 +471,7 @@ public final class CameraGLView extends GLSurfaceView {
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(file);
-                resultBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                resultBitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -567,6 +568,7 @@ public final class CameraGLView extends GLSurfaceView {
 //        matrix.postRotate(angle);
 //        matrix.setRotate(angle, bitmap.getWidth(), bitmap.getHeight());
         matrix.setRotate(angle);
+//        matrix.setScale(0.5f, 0.5f);
         System.out.println("angle2=" + angle);
         // 创建新的图片
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
