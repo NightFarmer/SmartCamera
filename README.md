@@ -8,3 +8,6 @@
 - GLSurfaceView实现相机快照
 - MediaCodec硬编码实现录像
 
+## 最低版本
+- 相机api-16
+- 录像api-18
