@@ -18,7 +18,7 @@ public class SmartCamera {
         intent.putExtra("requestCode", requestCode);
         intent.putExtra("cameraInfo", cameraInfo);
         activity.startActivityForResult(intent, requestCode);
-        activity.overridePendingTransition(R.anim.bottom_in, R.anim.stay);
+        activity.overridePendingTransition(R.anim.smart_camera_bottom_in, R.anim.smart_camera_stay);
     }
 
 }

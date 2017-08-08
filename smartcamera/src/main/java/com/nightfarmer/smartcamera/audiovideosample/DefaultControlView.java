@@ -66,7 +66,7 @@ public class DefaultControlView extends RelativeLayout {
     }
 
     private void init(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.default_control_view, this, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.smart_camera_default_control_view, this, false);
         view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(view);
 
@@ -170,7 +170,7 @@ public class DefaultControlView extends RelativeLayout {
         intent.putExtra("path", filePath);
         activity.setResult(Activity.RESULT_OK, intent);
         activity.finish();
-        activity.overridePendingTransition(R.anim.stay, R.anim.bottom_out);
+        activity.overridePendingTransition(R.anim.smart_camera_stay, R.anim.smart_camera_bottom_out);
     }
 
     private void onCancel() {

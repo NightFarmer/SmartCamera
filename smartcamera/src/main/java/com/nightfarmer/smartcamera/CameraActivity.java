@@ -65,7 +65,7 @@ public class CameraActivity extends AppCompatActivity {
         //让虚拟键盘一直不显示
         hideBottomBar();
 
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.smart_camera_activity_camera);
 
         cameraInfo = (CameraInfo) getIntent().getSerializableExtra("cameraInfo");
 

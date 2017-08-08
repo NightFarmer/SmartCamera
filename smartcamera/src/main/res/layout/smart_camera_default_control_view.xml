@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="25dp"
         android:layout_marginTop="28dp"
-        android:src="@drawable/switch_camera"
+        android:src="@drawable/smart_camera_switch_camera"
         android:text="切换" />
 
 
@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50dp"
                 android:rotation="90"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/smart_camera_arrow_right" />
 
             <com.nightfarmer.smartcamera.audiovideosample.SnapView
                 android:id="@+id/btn_snap"
@@ -55,14 +55,14 @@
                 android:layout_width="78dp"
                 android:layout_height="78dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/btn_bgd_cancel">
+                android:background="@drawable/smart_camera_btn_bgd_cancel">
 
                 <ImageView
                     android:tint="#2C2C2C"
                     android:layout_width="27dp"
                     android:layout_height="27dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/icon_cancel" />
+                    android:src="@drawable/smart_camera_icon_cancel" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -71,14 +71,14 @@
                 android:layout_height="78dp"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/btn_bgd_ok">
+                android:background="@drawable/smart_camera_btn_bgd_ok">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:tint="#1AAD19"
-                    android:src="@drawable/icon_ok" />
+                    android:src="@drawable/smart_camera_icon_ok" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

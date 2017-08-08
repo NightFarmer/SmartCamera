@@ -34,7 +34,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
         //让虚拟键盘一直不显示
 //        hideBottomBar();
 
-        setContentView(R.layout.activity_permission_check);
+        setContentView(R.layout.smart_camera_activity_permission_check);
 
         boolean permission = checkPermission();
         if (!permission) {
@@ -92,7 +92,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     finish();
-                    overridePendingTransition(R.anim.stay, R.anim.bottom_out);
+                    overridePendingTransition(R.anim.smart_camera_stay, R.anim.smart_camera_bottom_out);
                 }
             });
             builder.setCancelable(false);
@@ -110,7 +110,7 @@ public class PermissionCheckActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra("cameraInfo", getIntent().getSerializableExtra("cameraInfo"));
         startActivityForResult(intent, 1);
-        overridePendingTransition(R.anim.bottom_in, R.anim.stay);
+        overridePendingTransition(R.anim.smart_camera_bottom_in, R.anim.smart_camera_stay);
     }
 
 
@@ -139,6 +139,6 @@ public class PermissionCheckActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         setResult(resultCode, data);
         finish();
-        overridePendingTransition(R.anim.stay, R.anim.bottom_out);
+        overridePendingTransition(R.anim.smart_camera_stay, R.anim.smart_camera_bottom_out);
     }
 }
