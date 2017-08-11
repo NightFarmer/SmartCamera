@@ -6,6 +6,7 @@ package com.nightfarmer.smartcamera.audiovideosample;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Build;
@@ -110,7 +111,34 @@ public class CameraThread extends Thread {
                 final int[] max_fps = supportedFpsRange.get(supportedFpsRange.size() - 1);
                 Log.i(TAG, String.format("fps:%d-%d", max_fps[0], max_fps[1]));
                 params.setPreviewFpsRange(max_fps[0], max_fps[1]);
-                params.setRecordingHint(true);
+//==============V1.4新增调整↓
+                List<Integer> frameRates = params.getSupportedPreviewFrameRates();
+                if (frameRates != null) {
+                    Integer max = Collections.max(frameRates);
+                    params.setPreviewFrameRate(max);
+                }
+
+//                params.setExposureCompensation(params.getMaxExposureCompensation());
+                if(params.isAutoExposureLockSupported()) {
+                    params.setAutoExposureLock(false);
+                }
+//                final int[] previewFpsRange = new int[2];
+//                params.getPreviewFpsRange(previewFpsRange);
+//                if (previewFpsRange[0] == previewFpsRange[1]) {
+//                    final List<int[]> supportedFpsRanges = params.getSupportedPreviewFpsRange();
+//                    for (int[] range : supportedFpsRanges) {
+//                        if (range[0] != range[1]) {
+//                            params.setPreviewFpsRange(range[0], range[1]);
+//                            break;
+//                        }
+//                    }
+//                }
+//                params.setRecordingHint(true);
+//                params.set("scene-mode", "night");
+//                hehe(params);
+//                setBestExposure(params,false);
+//                params.setExposureCompensation();
+//==============V1.4新增调整↑
                 // request closest supported preview size
 //                Camera.Size closestSize = getClosestSupportedSize(
 //                        params.getSupportedPreviewSizes(), width, height);
@@ -155,6 +183,48 @@ public class CameraThread extends Thread {
                 // start camera preview display
                 mCamera.startPreview();
             }
+        }
+    }
+
+    void hehe(Camera.Parameters params){
+        if (params.getMaxNumMeteringAreas() > 0){ // check that metering areas are supported
+
+            List<Camera.Area> meteringAreas = new ArrayList<Camera.Area>();
+
+            Rect areaRect1 = new Rect(-100, -100, 100, 100);    // specify an area in center of image
+
+            meteringAreas.add(new Camera.Area(areaRect1, 600)); // set weight to 60%
+
+            Rect areaRect2 = new Rect(800, -1000, 1000, -800);  // specify an area in upper right of image
+
+            meteringAreas.add(new Camera.Area(areaRect2, 400)); // set weight to 40%
+
+            params.setMeteringAreas(meteringAreas);
+
+        }
+    }
+
+    private static final float MAX_EXPOSURE_COMPENSATION = 3.5f;
+    private static final float MIN_EXPOSURE_COMPENSATION = 0.0f;
+    public static void setBestExposure(Camera.Parameters parameters, boolean lightOn) {
+        int minExposure = parameters.getMinExposureCompensation();
+        int maxExposure = parameters.getMaxExposureCompensation();
+        float step = parameters.getExposureCompensationStep();
+        if ((minExposure != 0 || maxExposure != 0) && step > 0.0f) {
+            // Set low when light is on
+            float targetCompensation = lightOn ? MIN_EXPOSURE_COMPENSATION : MAX_EXPOSURE_COMPENSATION;
+            int compensationSteps = Math.round(targetCompensation / step);
+            float actualCompensation = step * compensationSteps;
+            // Clamp value:
+            compensationSteps = Math.max(Math.min(compensationSteps, maxExposure), minExposure);
+            if (parameters.getExposureCompensation() == compensationSteps) {
+                Log.i(TAG, "Exposure compensation already set to " + compensationSteps + " / " + actualCompensation);
+            } else {
+                Log.i(TAG, "Setting exposure compensation to " + compensationSteps + " / " + actualCompensation);
+                parameters.setExposureCompensation(compensationSteps);
+            }
+        } else {
+            Log.i(TAG, "Camera does not support exposure compensation");
         }
     }
 
